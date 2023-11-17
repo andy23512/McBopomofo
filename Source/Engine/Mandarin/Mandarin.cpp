@@ -681,37 +681,37 @@ static BopomofoKeyboardLayout* CreateStandardLayout() {
   std::vector<BPMF::Component> vec;
   BopomofoKeyToComponentMap ktcm;
 
-  ASSIGNKEY1(ktcm, vec, '/', BPMF::B);
-  ASSIGNKEY1(ktcm, vec, '[', BPMF::P);
-  ASSIGNKEY1(ktcm, vec, '(', BPMF::M);
-  ASSIGNKEY1(ktcm, vec, '-', BPMF::F);
+  ASSIGNKEY1(ktcm, vec, '7', BPMF::B);
+  ASSIGNKEY1(ktcm, vec, '8', BPMF::P);
+  ASSIGNKEY1(ktcm, vec, '9', BPMF::M);
+  ASSIGNKEY1(ktcm, vec, '0', BPMF::F);
   ASSIGNKEY1(ktcm, vec, 'w', BPMF::D);
   ASSIGNKEY1(ktcm, vec, 'z', BPMF::T);
   ASSIGNKEY1(ktcm, vec, 'g', BPMF::N);
-  ASSIGNKEY1(ktcm, vec, '#', BPMF::L);
+  ASSIGNKEY1(ktcm, vec, '/', BPMF::L);
   ASSIGNKEY1(ktcm, vec, 'k', BPMF::G);
   ASSIGNKEY1(ktcm, vec, 'c', BPMF::K);
   ASSIGNKEY1(ktcm, vec, 'm', BPMF::H);
   ASSIGNKEY1(ktcm, vec, 'r', BPMF::J);
   ASSIGNKEY1(ktcm, vec, 'e', BPMF::Q);
-  ASSIGNKEY1(ktcm, vec, '|', BPMF::X);
+  ASSIGNKEY1(ktcm, vec, '-', BPMF::X);
   ASSIGNKEY1(ktcm, vec, 'i', BPMF::ZH);
   ASSIGNKEY1(ktcm, vec, 'o', BPMF::CH);
   ASSIGNKEY1(ktcm, vec, '.', BPMF::SH);
-  ASSIGNKEY1(ktcm, vec, '{', BPMF::R);
+  ASSIGNKEY1(ktcm, vec, '[', BPMF::R);
   ASSIGNKEY1(ktcm, vec, '\'', BPMF::Z);
   ASSIGNKEY1(ktcm, vec, 'u', BPMF::C);
   ASSIGNKEY1(ktcm, vec, ',', BPMF::S);
   ASSIGNKEY1(ktcm, vec, 'a', BPMF::I);
   ASSIGNKEY1(ktcm, vec, 't', BPMF::U);
   ASSIGNKEY1(ktcm, vec, 'y', BPMF::UE);
-  ASSIGNKEY1(ktcm, vec, '$', BPMF::A);
-  ASSIGNKEY1(ktcm, vec, ']', BPMF::O);
-  ASSIGNKEY1(ktcm, vec, ')', BPMF::ER);
-  ASSIGNKEY1(ktcm, vec, '?', BPMF::E);
+  ASSIGNKEY1(ktcm, vec, '2', BPMF::A);
+  ASSIGNKEY1(ktcm, vec, '3', BPMF::O);
+  ASSIGNKEY1(ktcm, vec, '4', BPMF::ER);
+  ASSIGNKEY1(ktcm, vec, '5', BPMF::E);
   ASSIGNKEY1(ktcm, vec, 'b', BPMF::AI);
   ASSIGNKEY1(ktcm, vec, 'q', BPMF::EI);
-  ASSIGNKEY1(ktcm, vec, '=', BPMF::AO);
+  ASSIGNKEY1(ktcm, vec, '\\', BPMF::AO);
   ASSIGNKEY1(ktcm, vec, 'x', BPMF::OU);
   ASSIGNKEY1(ktcm, vec, 'f', BPMF::AN);
   ASSIGNKEY1(ktcm, vec, 'd', BPMF::EN);
@@ -721,7 +721,7 @@ static BopomofoKeyboardLayout* CreateStandardLayout() {
   ASSIGNKEY1(ktcm, vec, 'l', BPMF::Tone2);
   ASSIGNKEY1(ktcm, vec, 'n', BPMF::Tone3);
   ASSIGNKEY1(ktcm, vec, 'j', BPMF::Tone4);
-  ASSIGNKEY1(ktcm, vec, '}', BPMF::Tone5);
+  ASSIGNKEY1(ktcm, vec, ']', BPMF::Tone5);
 
   return new BopomofoKeyboardLayout(ktcm, "Standard");
 }
