@@ -704,7 +704,7 @@ static BopomofoKeyboardLayout* CreateStandardLayout() {
   ASSIGNKEY1(ktcm, vec, ',', BPMF::S);
   ASSIGNKEY1(ktcm, vec, 'a', BPMF::I);
   ASSIGNKEY1(ktcm, vec, 't', BPMF::U);
-  ASSIGNKEY1(ktcm, vec, 'y', BPMF::UE);
+  ASSIGNKEY1(ktcm, vec, 'l', BPMF::UE);
   ASSIGNKEY1(ktcm, vec, '2', BPMF::A);
   ASSIGNKEY1(ktcm, vec, '3', BPMF::O);
   ASSIGNKEY1(ktcm, vec, '4', BPMF::ER);
@@ -717,11 +717,11 @@ static BopomofoKeyboardLayout* CreateStandardLayout() {
   ASSIGNKEY1(ktcm, vec, 'd', BPMF::EN);
   ASSIGNKEY1(ktcm, vec, 'h', BPMF::ANG);
   ASSIGNKEY1(ktcm, vec, 'p', BPMF::ENG);
-  ASSIGNKEY1(ktcm, vec, 's', BPMF::ERR);
-  ASSIGNKEY1(ktcm, vec, 'l', BPMF::Tone2);
-  ASSIGNKEY1(ktcm, vec, 'n', BPMF::Tone3);
-  ASSIGNKEY1(ktcm, vec, 'j', BPMF::Tone4);
-  ASSIGNKEY1(ktcm, vec, ']', BPMF::Tone5);
+  ASSIGNKEY1(ktcm, vec, 'y', BPMF::ERR);
+  ASSIGNKEY1(ktcm, vec, 'n', BPMF::Tone2);
+  ASSIGNKEY1(ktcm, vec, 'j', BPMF::Tone3);
+  ASSIGNKEY1(ktcm, vec, 's', BPMF::Tone4);
+  ASSIGNKEY1(ktcm, vec, ';', BPMF::Tone5);
 
   return new BopomofoKeyboardLayout(ktcm, "Standard");
 }
