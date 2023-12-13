@@ -27,16 +27,23 @@ fileprivate class VerticalKeyLabelStripView: NSView {
     var keyLabelFont: NSFont = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
     var labelOffsetY: CGFloat = 0
     var keyLabels: [String] = []
-    var highlightedIndex: UInt = UInt.max
+    var highlightedIndex: Int = -1
 
     override var isFlipped: Bool {
         true
     }
 
     override func draw(_ dirtyRect: NSRect) {
+        var bigSurOrHigher = false
+        if #available(macOS 10.16, *) {
+            bigSurOrHigher = true
+        }
+
         let bounds = self.bounds
-        NSColor.white.setFill()
-        NSBezierPath.fill(bounds)
+        if !bigSurOrHigher {
+            NSColor.white.setFill()
+            NSBezierPath.fill(bounds)
+        }
 
         let count = UInt(keyLabels.count)
         if count == 0 {
@@ -51,32 +58,39 @@ fileprivate class VerticalKeyLabelStripView: NSView {
         paraStyle.setParagraphStyle(NSParagraphStyle.default)
         paraStyle.alignment = .center
 
-        let textAttr: [NSAttributedString.Key: AnyObject] = [
+        let textAttr: [NSAttributedString.Key: AnyObject] =
+            bigSurOrHigher ? [
+                .font: keyLabelFont,
+                .foregroundColor: NSColor.labelColor,
+                .paragraphStyle: paraStyle]
+            : [
+                .font: keyLabelFont,
+                .foregroundColor: black,
+                .paragraphStyle: paraStyle]
+        let textAttrHighlighted: [NSAttributedString.Key: AnyObject] = [
             .font: keyLabelFont,
-            .foregroundColor: black,
+            .foregroundColor: NSColor.selectedControlTextColor,
             .paragraphStyle: paraStyle]
         for index in 0..<count {
             let textRect = NSRect(x: 0.0, y: CGFloat(index) * cellHeight + labelOffsetY, width: bounds.size.width, height: cellHeight - labelOffsetY)
-            var cellRect = NSRect(x: 0.0, y: CGFloat(index) * cellHeight, width: bounds.size.width, height: cellHeight - 1)
-
-            if index + 1 >= count {
-                cellRect.size.height += 1.0
+            var cellRect = NSRect(x: 0.0, y: CGFloat(index) * cellHeight, width: bounds.size.width, height: cellHeight)
+            if !bigSurOrHigher && index + 1 < count {
+                cellRect.size.height -= 1.0
             }
 
-            (index == highlightedIndex ? darkGray : lightGray).setFill()
-            NSBezierPath.fill(cellRect)
             let text = keyLabels[Int(index)]
-            (text as NSString).draw(in: textRect, withAttributes: textAttr)
+            if bigSurOrHigher {
+                if index == highlightedIndex {
+                    NSColor.selectedControlColor.setFill()
+                    NSBezierPath.fill(cellRect)
+                }
+                (text as NSString).draw(in: textRect, withAttributes: (index == highlightedIndex) ? textAttrHighlighted : textAttr)
+            } else {
+                (index == highlightedIndex ? darkGray : lightGray).setFill()
+                NSBezierPath.fill(cellRect)
+                (text as NSString).draw(in: textRect, withAttributes: textAttr)
+            }
         }
-    }
-}
-
-fileprivate class VerticalCandidateTableView: NSTableView {
-    override func adjustScroll(_ newVisible: NSRect) -> NSRect {
-        var scrollRect = newVisible
-        let rowHeightPlusSpacing = rowHeight + intercellSpacing.height
-        scrollRect.origin.y = (scrollRect.origin.y / rowHeightPlusSpacing) * rowHeightPlusSpacing
-        return scrollRect
     }
 }
 
@@ -85,6 +99,7 @@ private let kCandidateTextLeftMargin: CGFloat = 8.0
 private let kCandidateTextPaddingWithMandatedTableViewPadding: CGFloat = 18.0
 private let kCandidateTextLeftMarginWithMandatedTableViewPadding: CGFloat = 0.0
 
+// Only used in macOS 10.15 (Catalina) or lower
 private class BackgroundView: NSView {
     override func draw(_ dirtyRect: NSRect) {
         NSColor.windowBackgroundColor.setFill()
@@ -105,12 +120,30 @@ public class VerticalCandidateController: CandidateController {
     private var tooltipView: NSTextField
 
     public init() {
+        var bigSurOrHigher = false
+        if #available(macOS 10.16, *) {
+            bigSurOrHigher = true
+        }
+
         var contentRect = NSRect(x: 128.0, y: 128.0, width: 0.0, height: 0.0)
         let styleMask: NSWindow.StyleMask = [.borderless, .nonactivatingPanel]
         let panel = NSPanel(contentRect: contentRect, styleMask: styleMask, backing: .buffered, defer: false)
         panel.level = NSWindow.Level(Int(kCGPopUpMenuWindowLevel) + 1)
         panel.hasShadow = true
-        panel.contentView = BackgroundView()
+
+        if bigSurOrHigher {
+            panel.backgroundColor = .clear
+            panel.isOpaque = false
+
+            let effect = NSVisualEffectView(frame: NSRect(x: 0, y: 0, width: 0, height: 0))
+            effect.blendingMode = .behindWindow
+            effect.material = .popover
+            effect.state = .active
+            effect.maskImage = .mask(withCornerRadius: 4)
+            panel.contentView = effect
+        } else {
+            panel.contentView = BackgroundView()
+        }
 
         tooltipView = NSTextField(frame: NSRect.zero)
         tooltipView.isEditable = false
@@ -130,6 +163,11 @@ public class VerticalCandidateController: CandidateController {
         scrollViewRect.size.width -= stripRect.size.width
         scrollView = NSScrollView(frame: scrollViewRect)
         scrollView.verticalScrollElasticity = .none
+        scrollView.contentView.postsBoundsChangedNotifications = true
+        if bigSurOrHigher {
+            scrollView.drawsBackground = false
+            scrollView.contentView.drawsBackground = false
+        }
 
         tableView = NSTableView(frame: contentRect)
         let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(rawValue: "candidate"))
@@ -144,7 +182,9 @@ public class VerticalCandidateController: CandidateController {
         tableView.headerView = nil
         tableView.allowsMultipleSelection = false
         tableView.allowsEmptySelection = false
-
+        if bigSurOrHigher {
+            tableView.backgroundColor = .clear
+        }
         if #available(macOS 10.16, *) {
             tableView.style = .fullWidth
             candidateTextPadding = kCandidateTextPaddingWithMandatedTableViewPadding
@@ -166,6 +206,11 @@ public class VerticalCandidateController: CandidateController {
         tableView.delegate = self
         tableView.doubleAction = #selector(rowDoubleClicked(_:))
         tableView.target = self
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(boundsChange),
+                                               name: NSView.boundsDidChangeNotification,
+                                               object: scrollView.contentView)
     }
 
     required init?(coder: NSCoder) {
@@ -173,7 +218,7 @@ public class VerticalCandidateController: CandidateController {
     }
 
     public override func reloadData() {
-        maxCandidateAttrStringWidth = ceil(candidateFont.pointSize * 2.0 + candidateTextPadding)
+        maxCandidateAttrStringWidth = ceil(candidateFont.pointSize + candidateTextPadding)
         tableView.reloadData()
         layoutCandidateView()
         if delegate?.candidateCountForController(self) ?? 0 > 0 {
@@ -251,6 +296,26 @@ public class VerticalCandidateController: CandidateController {
             tableView.selectRowIndexes(IndexSet(integer: Int(newIndex)), byExtendingSelection: false)
         }
     }
+
+    var scrollTimer: Timer?
+
+    @objc func boundsChange() {
+        let visibleRect = tableView.visibleRect
+        let visibleRowIndexes = tableView.rows(in: visibleRect)
+        let selected = selectedCandidateIndex
+
+        if selected == UInt.max || visibleRowIndexes.contains(Int(selected)) == false {
+            keyLabelStripView.highlightedIndex = -1
+            keyLabelStripView.setNeedsDisplay(keyLabelStripView.frame)
+        }
+
+        scrollTimer?.invalidate()
+        scrollTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: false) { timer in
+            self.tableView.scrollRowToVisible(visibleRowIndexes.lowerBound)
+            self.scrollTimer?.invalidate()
+            self.scrollTimer = nil
+        }
+    }
 }
 
 extension VerticalCandidateController: NSTableViewDataSource, NSTableViewDelegate {
@@ -301,7 +366,7 @@ extension VerticalCandidateController: NSTableViewDataSource, NSTableViewDelegat
             }
 
             if newHilightIndex != keyLabelStripView.highlightedIndex && newHilightIndex >= 0 {
-                keyLabelStripView.highlightedIndex = UInt(newHilightIndex)
+                keyLabelStripView.highlightedIndex = newHilightIndex
                 keyLabelStripView.setNeedsDisplay(keyLabelStripView.frame)
             }
 
@@ -316,19 +381,12 @@ extension VerticalCandidateController: NSTableViewDataSource, NSTableViewDelegat
             let firstVisibleRow = tableView.row(at: scrollView.documentVisibleRect.origin)
             // firstVisibleRow cannot be larger than selectedRow.
             if selectedRow >= firstVisibleRow {
-                keyLabelStripView.highlightedIndex = UInt(selectedRow - firstVisibleRow)
+                keyLabelStripView.highlightedIndex = selectedRow - firstVisibleRow
             } else {
-                keyLabelStripView.highlightedIndex = UInt.max
+                keyLabelStripView.highlightedIndex = -1
             }
 
             keyLabelStripView.setNeedsDisplay(keyLabelStripView.frame)
-
-            // fix a subtle OS X "bug" that, since we force the scroller to appear,
-            // scrolling sometimes shows a temporarily "broken" scroll bar
-            // (but quickly disappears)
-            if scrollView.hasVerticalScroller {
-                scrollView.verticalScroller?.setNeedsDisplay()
-            }
         }
     }
 
@@ -416,7 +474,6 @@ extension VerticalCandidateController: NSTableViewDataSource, NSTableViewDelegat
             return
         }
 
-
         var tooltipHeight: CGFloat = 0
         var tooltipWidth: CGFloat = 0
 
@@ -434,8 +491,6 @@ extension VerticalCandidateController: NSTableViewDataSource, NSTableViewDelegat
         let keyLabelFontSize = ceil(keyLabelFont.pointSize)
         let fontSize = max(candidateFontSize, keyLabelFontSize)
 
-        let controlSize: NSControl.ControlSize = fontSize > 36.0 ? .regular : .small
-
         var keyLabelCount = UInt(keyLabels.count)
         var scrollerWidth: CGFloat = 0.0
         if count <= keyLabelCount {
@@ -443,10 +498,7 @@ extension VerticalCandidateController: NSTableViewDataSource, NSTableViewDelegat
             scrollView.hasVerticalScroller = false
         } else {
             scrollView.hasVerticalScroller = true
-            let verticalScroller = scrollView.verticalScroller
-            verticalScroller?.controlSize = controlSize
-            verticalScroller?.scrollerStyle = .legacy
-            scrollerWidth = NSScroller.scrollerWidth(for: controlSize, scrollerStyle: .legacy)
+            scrollerWidth = NSScroller.scrollerWidth(for: .regular, scrollerStyle: NSScroller.preferredScrollerStyle)
         }
 
         keyLabelStripView.keyLabelFont = keyLabelFont
@@ -482,5 +534,22 @@ extension VerticalCandidateController: NSTableViewDataSource, NSTableViewDelegat
         scrollView.frame = NSRect(x: stripWidth + 1.0, y: 0, width: (windowWidth - stripWidth - 1), height: windowHeight - tooltipHeight)
         tooltipView.frame = NSRect(x: tooltipPadding, y: windowHeight - tooltipHeight + tooltipPadding, width: windowWidth, height: tooltipHeight)
         self.window?.setFrame(frameRect, display: false)
+    }
+
+
+}
+
+extension NSImage {
+    static func mask(withCornerRadius radius: CGFloat) -> NSImage {
+        let image = NSImage(size: NSSize(width: radius * 2, height: radius * 2), flipped: false) {
+            NSBezierPath(roundedRect: $0, xRadius: radius, yRadius: radius).fill()
+            NSColor.black.set()
+            return true
+        }
+        
+        image.capInsets = NSEdgeInsets(top: radius, left: radius, bottom: radius, right: radius)
+        image.resizingMode = .stretch
+        
+        return image
     }
 }

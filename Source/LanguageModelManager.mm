@@ -101,6 +101,12 @@ static void LTLoadAssociatedPhrases(McBopomofo::McBopomofoLM& lm)
 
 + (void)setupDataModelValueConverter
 {
+    auto macroConverter = [](std::string input) {
+        NSString *inputText = [NSString stringWithUTF8String:input.c_str()];
+        NSString *handled = [[InputMacroController shared] handle:inputText];
+        return std::string(handled.UTF8String);
+    };
+
     auto converter = [](std::string input) {
         if (!Preferences.chineseConversionEnabled) {
             return input;
@@ -114,11 +120,12 @@ static void LTLoadAssociatedPhrases(McBopomofo::McBopomofoLM& lm)
         if (Preferences.chineseConversionEngine == 1) {
             text = [VXHanConvert convertToSimplifiedFrom:text];
         } else {
-            text = [OpenCCBridge convertToSimplified:text];
+            text = [[OpenCCBridge sharedInstance] convertToSimplified:text];
         }
         return std::string(text.UTF8String);
     };
 
+    gLanguageModelMcBopomofo.setMacroConverter(macroConverter);
     gLanguageModelMcBopomofo.setExternalConverter(converter);
     gLanguageModelPlainBopomofo.setExternalConverter(converter);
 }
@@ -303,6 +310,15 @@ static void LTLoadAssociatedPhrases(McBopomofo::McBopomofoLM& lm)
 + (void)setPhraseReplacementEnabled:(BOOL)phraseReplacementEnabled
 {
     gLanguageModelMcBopomofo.setPhraseReplacementEnabled(phraseReplacementEnabled);
+}
+
++ (nullable NSString *)readingFor:(NSString *)phrase {
+    if (!gLanguageModelMcBopomofo.isDataModelLoaded()) {
+        [self loadDataModel:InputModeBopomofo];
+    }
+    
+    std::string reading = gLanguageModelMcBopomofo.getReading(phrase.UTF8String);
+    return !reading.empty() ? [NSString stringWithUTF8String:reading.c_str()] : nil;
 }
 
 @end

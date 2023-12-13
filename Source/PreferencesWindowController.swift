@@ -68,6 +68,55 @@ fileprivate let kWindowTitleHeight: CGFloat = 78
         window?.title = NSLocalizedString("Basic", comment: "")
         use(view: basicSettingsView)
 
+        // When the `CandidateListTextSize` is not yet populated, the pop up
+        // button adds an empty item and selects that empty item. This code
+        // correctly sets the default text size, and removes the empty item
+        // at the end.
+        let selectedSizeTitle = fontSizePopUpButton.selectedItem?.title ?? ""
+        if selectedSizeTitle.isEmpty {
+            let intFontSize = Int(Preferences.candidateListTextSize)
+            let intFontSizeStr = String.init(format: "%d", intFontSize)
+
+            var selected = false
+            for item in fontSizePopUpButton.itemArray {
+                if item.title == intFontSizeStr {
+                    fontSizePopUpButton.select(item)
+                    selected = true
+                    break
+                }
+            }
+
+            // If not selecetd, Preferences.candidateListTextSize is not set to
+            // one of the options provided in the pop up button. Let's list the
+            // option for the user.
+            if !selected {
+                var insertIndex = 0
+
+                // Place the item in the right place. We take advantage of the
+                // fact that Int("") returns nil, and so if the custom font size
+                // is larger than the largest item in the list (say 96), this
+                // code guarantees to place the custom font size item right below
+                // that largest item and before the empty item (which will then
+                // be removed by the code below).
+                for (index, item) in fontSizePopUpButton.itemArray.enumerated() {
+                    if intFontSize < (Int(item.title) ?? Int.max) {
+                        insertIndex = index
+                        break
+                    }
+                }
+                fontSizePopUpButton.insertItem(withTitle: intFontSizeStr, at: insertIndex)
+                fontSizePopUpButton.selectItem(at: insertIndex)
+            }
+
+            // Remove the last item if it's empty
+            let items = fontSizePopUpButton.itemArray
+            if let lastItem = items.last {
+                if lastItem.title.isEmpty {
+                    fontSizePopUpButton.removeItem(at: items.count - 1)
+                }
+            }
+        }
+
         let list = TISCreateInputSourceList(nil, true).takeRetainedValue() as! [TISInputSource]
         var usKeyboardLayoutItem: NSMenuItem? = nil
         var chosenItem: NSMenuItem? = nil
@@ -136,7 +185,14 @@ fileprivate let kWindowTitleHeight: CGFloat = 78
                     return newImage
                 }
 
-                menuItem.image = resize(image)
+                let resizedImage = resize(image)
+                // On newer version of macOS, the icons became black and white
+                // so we make them template images so it could look better
+                // on dark mode.
+                if #available(macOS 10.16, *) {
+                    resizedImage.isTemplate = true
+                }
+                menuItem.image = resizedImage
             }
 
             if sourceID == "com.apple.keylayout.US" {

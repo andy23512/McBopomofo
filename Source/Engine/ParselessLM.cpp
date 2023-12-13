@@ -35,10 +35,7 @@ McBopomofo::ParselessLM::~ParselessLM() { close(); }
 
 bool McBopomofo::ParselessLM::isLoaded()
 {
-    if (data_) {
-        return true;
-    }
-    return false;
+    return data_ != nullptr;
 }
 
 bool McBopomofo::ParselessLM::open(const std::string_view& path)
@@ -70,7 +67,7 @@ bool McBopomofo::ParselessLM::open(const std::string_view& path)
     }
 
     db_ = std::unique_ptr<ParselessPhraseDB>(new ParselessPhraseDB(
-        static_cast<char*>(data_), length_, /*validate_pragme=*/
+        static_cast<char*>(data_), length_, /*validate_pragma=*/
         true));
     return true;
 }
@@ -99,7 +96,7 @@ McBopomofo::ParselessLM::getUnigrams(const std::string& key)
         double score = 0;
 
         // Move ahead until we encounter the first space. This is the key.
-        auto it = row.begin();
+        const auto* it = row.begin();
         while (it != row.end() && *it != ' ') {
             ++it;
         }
@@ -113,7 +110,7 @@ McBopomofo::ParselessLM::getUnigrams(const std::string& key)
 
         if (it != row.end()) {
             // Now it is the start of the value portion.
-            auto value_begin = it;
+            const auto* value_begin = it;
 
             // Move ahead until we encounter the second space. This is the
             // value.
@@ -143,4 +140,55 @@ bool McBopomofo::ParselessLM::hasUnigrams(const std::string& key)
     }
 
     return db_->findFirstMatchingLine(key + " ") != nullptr;
+}
+
+std::vector<McBopomofo::ParselessLM::FoundReading> McBopomofo::ParselessLM::getReadings(const std::string& value)
+{
+    if (db_ == nullptr) {
+        return std::vector<McBopomofo::ParselessLM::FoundReading>();
+    }
+
+    std::vector<McBopomofo::ParselessLM::FoundReading> results;
+
+    // We append a space so that we only find rows with the exact value. We
+    // are taking advantage of the fact that a well-form row in this LM must
+    // be in the format of "key value score".
+    std::string actualValue = value + " ";
+
+    for (const auto& row : db_->reverseFindRows(actualValue)) {
+        std::string key;
+        double score = 0;
+
+        // Move ahead until we encounter the first space. This is the key.
+        auto it = row.begin();
+        while (it != row.end() && *it != ' ') {
+            ++it;
+        }
+
+        key = std::string(row.begin(), it);
+
+        // Read past the space.
+        if (it != row.end()) {
+            ++it;
+        }
+
+        if (it != row.end()) {
+            // Now it is the start of the value portion, but we move ahead
+            // until we encounter the second space to skip this part.
+            while (it != row.end() && *it != ' ') {
+                ++it;
+            }
+        }
+
+        // Read past the space. The remainder, if it exists, is the score.
+        if (it != row.end()) {
+            ++it;
+        }
+
+        if (it != row.end()) {
+            score = std::stod(std::string(it, row.end()));
+        }
+        results.emplace_back(McBopomofo::ParselessLM::FoundReading { key, score });
+    }
+    return results;
 }

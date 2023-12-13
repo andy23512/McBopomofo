@@ -5664,6 +5664,7 @@
 傷 ㄕㄤ shang g; big5
 殤 ㄕㄤ shang g; big5
 觴 ㄕㄤ shang g; big5
+熵 ㄕㄤ shang g; big5
 湯 ㄕㄤ shang g; big5
 漡 ㄕㄤ shang g; big5
 蔏 ㄕㄤ shang g; big5
@@ -7899,6 +7900,7 @@
 荓 ㄆㄧㄥˊ ping2 qu/6 big5
 蓱 ㄆㄧㄥˊ ping2 qu/6 big5
 炾 ㄆㄧㄥˊ ping2 qu/6 big5
+聘 ㄆㄧㄥˋ ping4 qu/4 big5
 篇 ㄆㄧㄢ pian qu0 big5
 偏 ㄆㄧㄢ pian qu0 big5
 扁 ㄆㄧㄢ pian qu0 big5
@@ -10210,6 +10212,7 @@
 扰 ㄧㄡˋ you4 u.4 big5
 牰 ㄧㄡˋ you4 u.4 big5
 迶 ㄧㄡˋ you4 u.4 big5
+鈾 ㄧㄡˋ you4 u.4 big5
 由 ㄧㄡˊ you2 u.6 big5
 游 ㄧㄡˊ you2 u.6 big5
 遊 ㄧㄡˊ you2 u.6 big5
@@ -11444,6 +11447,7 @@
 殠 ㄒㄧㄡˋ xiu4 vu.4 big5
 褎 ㄒㄧㄡˋ xiu4 vu.4 big5
 螑 ㄒㄧㄡˋ xiu4 vu.4 big5
+綉 ㄒㄧㄡˋ xiu4 vu.4 big5
 興 ㄒㄧㄥ xing vu/ big5
 星 ㄒㄧㄥ xing vu/ big5
 猩 ㄒㄧㄥ xing vu/ big5
@@ -12728,6 +12732,7 @@
 曫 ㄌㄨㄢˊ luan2 xj06 big5
 羉 ㄌㄨㄢˊ luan2 xj06 big5
 癵 ㄌㄨㄢˊ luan2 xj06 big5
+孿 ㄌㄨㄢˊ luan2 xj06 big5
 魯 ㄌㄨˇ lu3 xj3 big5
 虜 ㄌㄨˇ lu3 xj3 big5
 擄 ㄌㄨˇ lu3 xj3 big5

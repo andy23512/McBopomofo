@@ -23,7 +23,9 @@
 
 #include "McBopomofoLM.h"
 #include <algorithm>
+#include <float.h>
 #include <iterator>
+#include <limits>
 
 namespace McBopomofo {
 
@@ -132,7 +134,21 @@ bool McBopomofoLM::hasUnigrams(const std::string& key)
         return m_userPhrases.hasUnigrams(key) || m_languageModel.hasUnigrams(key);
     }
 
-    return getUnigrams(key).size() > 0;
+    return !getUnigrams(key).empty();
+}
+
+std::string McBopomofoLM::getReading(const std::string& value)
+{
+    std::vector<ParselessLM::FoundReading> foundReadings = m_languageModel.getReadings(value);
+    double topScore = std::numeric_limits<double>::lowest();
+    std::string topValue;
+    for (const auto& foundReading : foundReadings) {
+        if (foundReading.score > topScore) {
+            topValue = foundReading.reading;
+            topScore = foundReading.score;
+        }
+    }
+    return topValue;
 }
 
 void McBopomofoLM::setPhraseReplacementEnabled(bool enabled)
@@ -140,7 +156,7 @@ void McBopomofoLM::setPhraseReplacementEnabled(bool enabled)
     m_phraseReplacementEnabled = enabled;
 }
 
-bool McBopomofoLM::phraseReplacementEnabled()
+bool McBopomofoLM::phraseReplacementEnabled() const
 {
     return m_phraseReplacementEnabled;
 }
@@ -150,7 +166,7 @@ void McBopomofoLM::setExternalConverterEnabled(bool enabled)
     m_externalConverterEnabled = enabled;
 }
 
-bool McBopomofoLM::externalConverterEnabled()
+bool McBopomofoLM::externalConverterEnabled() const
 {
     return m_externalConverterEnabled;
 }
@@ -158,6 +174,10 @@ bool McBopomofoLM::externalConverterEnabled()
 void McBopomofoLM::setExternalConverter(std::function<std::string(std::string)> externalConverter)
 {
     m_externalConverter = externalConverter;
+}
+
+void McBopomofoLM::setMacroConverter(std::function<std::string(std::string)> macroConverter) {
+    m_macroConverter = macroConverter;
 }
 
 std::vector<Formosa::Gramambular2::LanguageModel::Unigram> McBopomofoLM::filterAndTransformUnigrams(const std::vector<Formosa::Gramambular2::LanguageModel::Unigram> unigrams, const std::unordered_set<std::string>& excludedValues, std::unordered_set<std::string>& insertedValues)
@@ -173,17 +193,22 @@ std::vector<Formosa::Gramambular2::LanguageModel::Unigram> McBopomofoLM::filterA
         }
 
         std::string value = originalValue;
+
         if (m_phraseReplacementEnabled) {
             std::string replacement = m_phraseReplacement.valueForKey(value);
-            if (replacement != "") {
+            if (!replacement.empty()) {
                 value = replacement;
             }
+        }
+        if (m_macroConverter) {
+            std::string replacement = m_macroConverter(value);
+            value = replacement;
         }
         if (m_externalConverterEnabled && m_externalConverter) {
             std::string replacement = m_externalConverter(value);
             value = replacement;
         }
-        if (insertedValues.find(value) == insertedValues.end()) {
+        if (!value.empty() && insertedValues.find(value) == insertedValues.end()) {
             results.emplace_back(value, unigram.score());
             insertedValues.insert(value);
         }

@@ -233,37 +233,20 @@ class McBopomofoInputMethodController: IMKInputController {
         (NSApp.delegate as? AppDelegate)?.checkForUpdate(forced: true)
     }
 
-    private func open(userFileAt path: String) {
-        func checkIfUserFilesExist() -> Bool {
-            if !LanguageModelManager.checkIfUserLanguageModelFilesExist() {
-                let content = String(format: NSLocalizedString("Please check the permission of the path at \"%@\".", comment: ""), LanguageModelManager.dataFolderPath)
-                NonModalAlertWindowController.shared.show(title: NSLocalizedString("Unable to create the user phrase file.", comment: ""), content: content, confirmButtonTitle: NSLocalizedString("OK", comment: ""), cancelButtonTitle: nil, cancelAsDefault: false, delegate: nil)
-                return false
-            }
-            return true
-        }
-
-        if !checkIfUserFilesExist() {
-            return
-        }
-        let url = URL(fileURLWithPath: path)
-        NSWorkspace.shared.open(url)
-    }
-
     @objc func openUserPhrases(_ sender: Any?) {
-        open(userFileAt: LanguageModelManager.userPhrasesDataPathMcBopomofo)
+        (NSApp.delegate as? AppDelegate)?.openUserPhrases(sender)
     }
 
     @objc func openExcludedPhrasesPlainBopomofo(_ sender: Any?) {
-        open(userFileAt: LanguageModelManager.excludedPhrasesDataPathPlainBopomofo)
+        (NSApp.delegate as? AppDelegate)?.openExcludedPhrasesPlainBopomofo(sender)
     }
 
     @objc func openExcludedPhrasesMcBopomofo(_ sender: Any?) {
-        open(userFileAt: LanguageModelManager.excludedPhrasesDataPathMcBopomofo)
+        (NSApp.delegate as? AppDelegate)?.openExcludedPhrasesMcBopomofo(sender)
     }
 
     @objc func openPhraseReplacementMcBopomofo(_ sender: Any?) {
-        open(userFileAt: LanguageModelManager.phraseReplacementDataPathMcBopomofo)
+        (NSApp.delegate as? AppDelegate)?.openPhraseReplacementMcBopomofo(sender)
     }
 
     @objc func reloadUserPhrases(_ sender: Any?) {
@@ -286,27 +269,28 @@ extension McBopomofoInputMethodController {
         let previous = state
         state = newState
 
-        if let newState = newState as? InputState.Deactivated {
+        switch newState {
+        case let newState as InputState.Deactivated:
             handle(state: newState, previous: previous, client: client)
-            // Force transition to Empty, so that when activateServer is
-            // invoked again, the controller is already in the Empty state.
             state = .Empty()
-        } else if let newState = newState as? InputState.Empty {
+        case let newState as InputState.Empty:
             handle(state: newState, previous: previous, client: client)
-        } else if let newState = newState as? InputState.EmptyIgnoringPreviousState {
+        case let newState as InputState.EmptyIgnoringPreviousState:
             handle(state: newState, previous: previous, client: client)
-        } else if let newState = newState as? InputState.Committing {
+        case let newState as InputState.Committing:
             handle(state: newState, previous: previous, client: client)
-        } else if let newState = newState as? InputState.Inputting {
+        case let newState as InputState.Inputting:
             handle(state: newState, previous: previous, client: client)
-        } else if let newState = newState as? InputState.Marking {
+        case let newState as InputState.Marking:
             handle(state: newState, previous: previous, client: client)
-        } else if let newState = newState as? InputState.ChoosingCandidate {
+        case let newState as InputState.ChoosingCandidate:
             handle(state: newState, previous: previous, client: client)
-        } else if let newState = newState as? InputState.AssociatedPhrases {
+        case let newState as InputState.AssociatedPhrases:
             handle(state: newState, previous: previous, client: client)
-        } else if let newState = newState as? InputState.Big5 {
+        case let newState as InputState.Big5:
             handle(state: newState, previous: previous, client: client)
+        default:
+            break
         }
     }
 
@@ -319,7 +303,7 @@ extension McBopomofoInputMethodController {
             if Preferences.chineseConversionStyle == 1 {
                 return text
             }
-            return Preferences.chineseConversionEngine == 1 ? VXHanConvert.convertToSimplified(from: text) : OpenCCBridge.convertToSimplified(text) ?? ""
+            return Preferences.chineseConversionEngine == 1 ? VXHanConvert.convertToSimplified(from: text) : OpenCCBridge.shared.convertToSimplified(text) ?? ""
         }
 
         let buffer = convertToSimplifiedChineseIfRequired(text)

@@ -42,13 +42,6 @@ ParselessPhraseDB::ParselessPhraseDB(
         std::string_view header(buf, SORTED_PRAGMA_HEADER.length());
         assert(header == SORTED_PRAGMA_HEADER);
 
-        uint32_t x = 5381;
-        for (const auto& i : header) {
-            x = x * 33 + i;
-        }
-
-        assert(x == uint32_t { 3012373384 });
-
         begin_ += header.length();
     }
 }
@@ -161,6 +154,46 @@ const char* ParselessPhraseDB::findFirstMatchingLine(
     }
 
     return nullptr;
+}
+
+std::vector<std::string> ParselessPhraseDB::reverseFindRows(
+    const std::string_view& value)
+{
+    std::vector<std::string> rows;
+
+    const char* recordBegin = begin_;
+
+    while (recordBegin < end_) {
+        const char* ptr = recordBegin;
+
+        // skip over the key to find the field separator
+        while (ptr < end_ && *ptr != ' ') {
+            ++ptr;
+        }
+        // skip over the field separator. there should be just one, but loop just in case.
+        while (ptr < end_ && *ptr == ' ') {
+            ++ptr;
+        }
+
+        // now walk to the end of this record
+        const char* recordEnd = ptr;
+        while (recordEnd < end_ && *recordEnd != '\n') {
+            ++recordEnd;
+        }
+
+        if (ptr + value.length() < end_ && memcmp(ptr, value.data(), value.length()) == 0) {
+            // prefix match, add entire record to return value
+            rows.emplace_back(recordBegin, recordEnd - recordBegin);
+        }
+
+        // skip over to the next line start
+        recordBegin = recordEnd;
+        while (recordBegin < end_ && *recordBegin == '\n') {
+            ++recordBegin;
+        }
+    }
+
+    return rows;
 }
 
 }; // namespace McBopomofo
