@@ -725,7 +725,7 @@ static BopomofoKeyboardLayout* CreateStandardLayout() {
   ASSIGNKEY1(ktcm, vec, 'o', BPMF::CH);
   ASSIGNKEY1(ktcm, vec, '.', BPMF::SH);
   ASSIGNKEY1(ktcm, vec, '[', BPMF::R);
-  ASSIGNKEY1(ktcm, vec, '/', BPMF::Z);
+  ASSIGNKEY1(ktcm, vec, '\'', BPMF::Z);
   ASSIGNKEY1(ktcm, vec, 'u', BPMF::C);
   ASSIGNKEY1(ktcm, vec, ',', BPMF::S);
   ASSIGNKEY1(ktcm, vec, 'a', BPMF::I);
