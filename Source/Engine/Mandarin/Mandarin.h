@@ -244,6 +244,16 @@ class BopomofoKeyboardLayout {
       BPMF follow = BPMF(components[1]);
       BPMF ending = components.size() > 2 ? BPMF(components[2]) : follow;
 
+      if (this == M4GLayout()) {
+        if (follow.belongsToJQXClass() || follow.vowelComponent() == BPMF::E) {
+          syllable += (beforeSeqHasIorUE || aheadSeqHasIorUE) ? follow : head;
+        }
+        else {
+          syllable += head;
+        }
+        continue;
+      }
+
       // apply the I/UE + E rule
       if (head.vowelComponent() == BPMF::E &&
           follow.vowelComponent() != BPMF::E) {
@@ -320,6 +330,14 @@ class BopomofoKeyboardLayout {
                  (syllable.middleVowelComponent() == BPMF::I ||
                   syllable.middleVowelComponent() == BPMF::UE)) {
         syllable += BPMF(BPMF::J);
+      }
+    }
+
+    // heuristics for M4G keyboard layout
+    if (this == M4GLayout()) {
+      if (syllable.vowelComponent() == BPMF::ENG && !syllable.hasConsonant() &&
+          !syllable.hasMiddleVowel()) {
+        syllable += BPMF(BPMF::ERR);
       }
     }
 
