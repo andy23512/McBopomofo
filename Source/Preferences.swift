@@ -174,6 +174,8 @@ struct CandidateListTextSize {
     case eten26 = 3
     case hanyuPinyin = 4
     case IBM = 5
+    case CC1 = 6
+    case M4G = 7
 
     var name: String {
         return switch self {
@@ -189,6 +191,10 @@ struct CandidateListTextSize {
             "HanyuPinyin"
         case .IBM:
             "IBM"
+        case .CC1:
+            "CC1"
+        case .M4G:
+            "M4G"
         }
     }
 }
