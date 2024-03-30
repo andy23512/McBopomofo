@@ -117,6 +117,8 @@
                                 <menuItem title="ETen26" tag="3" id="2Fd-53-YVa"/>
                                 <menuItem title="IBM" tag="5" id="rEa-J5-b6E"/>
                                 <menuItem title="Hanyu Pinyin" tag="4" id="sFg-6S-wZU"/>
+                                <menuItem title="CC1" tag="6" id="qli-hH-Y8T"/>
+                                <menuItem title="M4G" tag="7" id="Acm-dJ-Elq"/>
                             </items>
                         </menu>
                         <connections>
@@ -304,7 +306,7 @@
                     <rect key="frame" x="230" y="296" width="221" height="32"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Z7n-dF-oDt">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <string key="title">Allow moving cursor by JK keys 
+                        <string key="title">Allow moving cursor by JK keys
 when selecting candidats</string>
                         <font key="font" metaFont="system"/>
                     </buttonCell>

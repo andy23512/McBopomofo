@@ -707,47 +707,47 @@ static BopomofoKeyboardLayout* CreateStandardLayout() {
   std::vector<BPMF::Component> vec;
   BopomofoKeyToComponentMap ktcm;
 
-  ASSIGNKEY1(ktcm, vec, '7', BPMF::B);
-  ASSIGNKEY1(ktcm, vec, '8', BPMF::P);
-  ASSIGNKEY1(ktcm, vec, '9', BPMF::M);
-  ASSIGNKEY1(ktcm, vec, '0', BPMF::F);
-  ASSIGNKEY1(ktcm, vec, 'w', BPMF::D);
-  ASSIGNKEY1(ktcm, vec, 'z', BPMF::T);
-  ASSIGNKEY1(ktcm, vec, 'g', BPMF::N);
-  ASSIGNKEY1(ktcm, vec, '=', BPMF::L);
-  ASSIGNKEY1(ktcm, vec, 'k', BPMF::G);
-  ASSIGNKEY1(ktcm, vec, 'c', BPMF::K);
-  ASSIGNKEY1(ktcm, vec, 'm', BPMF::H);
+  ASSIGNKEY1(ktcm, vec, '1', BPMF::B);
+  ASSIGNKEY1(ktcm, vec, 'q', BPMF::P);
+  ASSIGNKEY1(ktcm, vec, 'a', BPMF::M);
+  ASSIGNKEY1(ktcm, vec, 'z', BPMF::F);
+  ASSIGNKEY1(ktcm, vec, '2', BPMF::D);
+  ASSIGNKEY1(ktcm, vec, 'w', BPMF::T);
+  ASSIGNKEY1(ktcm, vec, 's', BPMF::N);
+  ASSIGNKEY1(ktcm, vec, 'x', BPMF::L);
+  ASSIGNKEY1(ktcm, vec, 'e', BPMF::G);
+  ASSIGNKEY1(ktcm, vec, 'd', BPMF::K);
+  ASSIGNKEY1(ktcm, vec, 'c', BPMF::H);
   ASSIGNKEY1(ktcm, vec, 'r', BPMF::J);
-  ASSIGNKEY1(ktcm, vec, 'e', BPMF::Q);
-  ASSIGNKEY1(ktcm, vec, '-', BPMF::X);
-  ASSIGNKEY1(ktcm, vec, 'i', BPMF::ZH);
-  ASSIGNKEY1(ktcm, vec, 'o', BPMF::CH);
-  ASSIGNKEY1(ktcm, vec, '.', BPMF::SH);
-  ASSIGNKEY1(ktcm, vec, '[', BPMF::R);
-  ASSIGNKEY1(ktcm, vec, '\'', BPMF::Z);
-  ASSIGNKEY1(ktcm, vec, 'u', BPMF::C);
-  ASSIGNKEY1(ktcm, vec, ',', BPMF::S);
-  ASSIGNKEY1(ktcm, vec, 'a', BPMF::I);
-  ASSIGNKEY1(ktcm, vec, 't', BPMF::U);
-  ASSIGNKEY1(ktcm, vec, 'l', BPMF::UE);
-  ASSIGNKEY1(ktcm, vec, '2', BPMF::A);
-  ASSIGNKEY1(ktcm, vec, '3', BPMF::O);
-  ASSIGNKEY1(ktcm, vec, '4', BPMF::ER);
-  ASSIGNKEY1(ktcm, vec, '5', BPMF::E);
-  ASSIGNKEY1(ktcm, vec, 'b', BPMF::AI);
-  ASSIGNKEY1(ktcm, vec, 'q', BPMF::EI);
-  ASSIGNKEY1(ktcm, vec, '\\', BPMF::AO);
-  ASSIGNKEY1(ktcm, vec, 'x', BPMF::OU);
-  ASSIGNKEY1(ktcm, vec, 'f', BPMF::AN);
-  ASSIGNKEY1(ktcm, vec, 'd', BPMF::EN);
-  ASSIGNKEY1(ktcm, vec, 'h', BPMF::ANG);
-  ASSIGNKEY1(ktcm, vec, 'p', BPMF::ENG);
-  ASSIGNKEY1(ktcm, vec, 'y', BPMF::ERR);
-  ASSIGNKEY1(ktcm, vec, 'j', BPMF::Tone3);
-  ASSIGNKEY1(ktcm, vec, 's', BPMF::Tone4);
-  ASSIGNKEY1(ktcm, vec, 'n', BPMF::Tone2);
-  ASSIGNKEY1(ktcm, vec, ';', BPMF::Tone5);
+  ASSIGNKEY1(ktcm, vec, 'f', BPMF::Q);
+  ASSIGNKEY1(ktcm, vec, 'v', BPMF::X);
+  ASSIGNKEY1(ktcm, vec, '5', BPMF::ZH);
+  ASSIGNKEY1(ktcm, vec, 't', BPMF::CH);
+  ASSIGNKEY1(ktcm, vec, 'g', BPMF::SH);
+  ASSIGNKEY1(ktcm, vec, 'b', BPMF::R);
+  ASSIGNKEY1(ktcm, vec, 'y', BPMF::Z);
+  ASSIGNKEY1(ktcm, vec, 'h', BPMF::C);
+  ASSIGNKEY1(ktcm, vec, 'n', BPMF::S);
+  ASSIGNKEY1(ktcm, vec, 'u', BPMF::I);
+  ASSIGNKEY1(ktcm, vec, 'j', BPMF::U);
+  ASSIGNKEY1(ktcm, vec, 'm', BPMF::UE);
+  ASSIGNKEY1(ktcm, vec, '8', BPMF::A);
+  ASSIGNKEY1(ktcm, vec, 'i', BPMF::O);
+  ASSIGNKEY1(ktcm, vec, 'k', BPMF::ER);
+  ASSIGNKEY1(ktcm, vec, ',', BPMF::E);
+  ASSIGNKEY1(ktcm, vec, '9', BPMF::AI);
+  ASSIGNKEY1(ktcm, vec, 'o', BPMF::EI);
+  ASSIGNKEY1(ktcm, vec, 'l', BPMF::AO);
+  ASSIGNKEY1(ktcm, vec, '.', BPMF::OU);
+  ASSIGNKEY1(ktcm, vec, '0', BPMF::AN);
+  ASSIGNKEY1(ktcm, vec, 'p', BPMF::EN);
+  ASSIGNKEY1(ktcm, vec, ';', BPMF::ANG);
+  ASSIGNKEY1(ktcm, vec, '/', BPMF::ENG);
+  ASSIGNKEY1(ktcm, vec, '-', BPMF::ERR);
+  ASSIGNKEY1(ktcm, vec, '3', BPMF::Tone3);
+  ASSIGNKEY1(ktcm, vec, '4', BPMF::Tone4);
+  ASSIGNKEY1(ktcm, vec, '6', BPMF::Tone2);
+  ASSIGNKEY1(ktcm, vec, '7', BPMF::Tone5);
 
   return new BopomofoKeyboardLayout(ktcm, "Standard");
 }
@@ -921,6 +921,99 @@ static BopomofoKeyboardLayout* CreateHanyuPinyinLayout() {
   return new BopomofoKeyboardLayout(ktcm, "HanyuPinyin");
 }
 
+static BopomofoKeyboardLayout* CreateCC1Layout() {
+  std::vector<BPMF::Component> vec;
+  BopomofoKeyToComponentMap ktcm;
+
+  ASSIGNKEY1(ktcm, vec, '7', BPMF::B);
+  ASSIGNKEY1(ktcm, vec, '8', BPMF::P);
+  ASSIGNKEY1(ktcm, vec, '9', BPMF::M);
+  ASSIGNKEY1(ktcm, vec, '0', BPMF::F);
+  ASSIGNKEY1(ktcm, vec, 'w', BPMF::D);
+  ASSIGNKEY1(ktcm, vec, 'z', BPMF::T);
+  ASSIGNKEY1(ktcm, vec, 'g', BPMF::N);
+  ASSIGNKEY1(ktcm, vec, '=', BPMF::L);
+  ASSIGNKEY1(ktcm, vec, 'k', BPMF::G);
+  ASSIGNKEY1(ktcm, vec, 'c', BPMF::K);
+  ASSIGNKEY1(ktcm, vec, 'm', BPMF::H);
+  ASSIGNKEY1(ktcm, vec, 'r', BPMF::J);
+  ASSIGNKEY1(ktcm, vec, 'e', BPMF::Q);
+  ASSIGNKEY1(ktcm, vec, '-', BPMF::X);
+  ASSIGNKEY1(ktcm, vec, 'i', BPMF::ZH);
+  ASSIGNKEY1(ktcm, vec, 'o', BPMF::CH);
+  ASSIGNKEY1(ktcm, vec, '.', BPMF::SH);
+  ASSIGNKEY1(ktcm, vec, '[', BPMF::R);
+  ASSIGNKEY1(ktcm, vec, '\'', BPMF::Z);
+  ASSIGNKEY1(ktcm, vec, 'u', BPMF::C);
+  ASSIGNKEY1(ktcm, vec, ',', BPMF::S);
+  ASSIGNKEY1(ktcm, vec, 'a', BPMF::I);
+  ASSIGNKEY1(ktcm, vec, 't', BPMF::U);
+  ASSIGNKEY1(ktcm, vec, 'l', BPMF::UE);
+  ASSIGNKEY1(ktcm, vec, '2', BPMF::A);
+  ASSIGNKEY1(ktcm, vec, '3', BPMF::O);
+  ASSIGNKEY1(ktcm, vec, '4', BPMF::ER);
+  ASSIGNKEY1(ktcm, vec, '5', BPMF::E);
+  ASSIGNKEY1(ktcm, vec, 'b', BPMF::AI);
+  ASSIGNKEY1(ktcm, vec, 'q', BPMF::EI);
+  ASSIGNKEY1(ktcm, vec, '\\', BPMF::AO);
+  ASSIGNKEY1(ktcm, vec, 'x', BPMF::OU);
+  ASSIGNKEY1(ktcm, vec, 'f', BPMF::AN);
+  ASSIGNKEY1(ktcm, vec, 'd', BPMF::EN);
+  ASSIGNKEY1(ktcm, vec, 'h', BPMF::ANG);
+  ASSIGNKEY1(ktcm, vec, 'p', BPMF::ENG);
+  ASSIGNKEY1(ktcm, vec, 'y', BPMF::ERR);
+  ASSIGNKEY1(ktcm, vec, 'j', BPMF::Tone3);
+  ASSIGNKEY1(ktcm, vec, 's', BPMF::Tone4);
+  ASSIGNKEY1(ktcm, vec, 'n', BPMF::Tone2);
+  ASSIGNKEY1(ktcm, vec, ';', BPMF::Tone5);
+
+  return new BopomofoKeyboardLayout(ktcm, "CC1");
+}
+
+static BopomofoKeyboardLayout* CreateM4GLayout () {
+  std::vector<BPMF::Component> vec;
+  BopomofoKeyToComponentMap ktcm;
+
+  ASSIGNKEY1(ktcm, vec, 'w', BPMF::B);
+  ASSIGNKEY1(ktcm, vec, 'z', BPMF::P);
+  ASSIGNKEY1(ktcm, vec, 'g', BPMF::M);
+  ASSIGNKEY1(ktcm, vec, '=', BPMF::F);
+  ASSIGNKEY1(ktcm, vec, 'k', BPMF::D);
+  ASSIGNKEY1(ktcm, vec, 'c', BPMF::T);
+  ASSIGNKEY1(ktcm, vec, 'm', BPMF::N);
+  ASSIGNKEY1(ktcm, vec, 'v', BPMF::L);
+  ASSIGNKEY2(ktcm, vec, 'r', BPMF::G, BPMF::J);
+  ASSIGNKEY2(ktcm, vec, 'e', BPMF::K, BPMF::Q);
+  ASSIGNKEY2(ktcm, vec, '-', BPMF::H, BPMF::X);
+  ASSIGNKEY1(ktcm, vec, 'i', BPMF::ZH);
+  ASSIGNKEY1(ktcm, vec, 'o', BPMF::CH);
+  ASSIGNKEY1(ktcm, vec, '.', BPMF::SH);
+  ASSIGNKEY1(ktcm, vec, '[', BPMF::R);
+  ASSIGNKEY1(ktcm, vec, '\'', BPMF::Z);
+  ASSIGNKEY1(ktcm, vec, 'u', BPMF::C);
+  ASSIGNKEY1(ktcm, vec, ',', BPMF::S);
+  ASSIGNKEY1(ktcm, vec, 'a', BPMF::I);
+  ASSIGNKEY1(ktcm, vec, 't', BPMF::U);
+  ASSIGNKEY1(ktcm, vec, 'y', BPMF::UE);
+  ASSIGNKEY1(ktcm, vec, 'l', BPMF::A);
+  ASSIGNKEY1(ktcm, vec, 'n', BPMF::O);
+  ASSIGNKEY2(ktcm, vec, 'j', BPMF::ER, BPMF::E);
+  ASSIGNKEY1(ktcm, vec, 'b', BPMF::AI);
+  ASSIGNKEY1(ktcm, vec, 'q', BPMF::EI);
+  ASSIGNKEY1(ktcm, vec, '\\', BPMF::AO);
+  ASSIGNKEY1(ktcm, vec, 'x', BPMF::OU);
+  ASSIGNKEY1(ktcm, vec, 'f', BPMF::AN);
+  ASSIGNKEY1(ktcm, vec, 'd', BPMF::EN);
+  ASSIGNKEY1(ktcm, vec, 'h', BPMF::ANG);
+  ASSIGNKEY2(ktcm, vec, 'p', BPMF::ENG, BPMF::ERR);
+  ASSIGNKEY1(ktcm, vec, ']', BPMF::Tone2);
+  ASSIGNKEY1(ktcm, vec, 's', BPMF::Tone3);
+  ASSIGNKEY1(ktcm, vec, ';', BPMF::Tone4);
+  ASSIGNKEY1(ktcm, vec, '/', BPMF::Tone5);
+
+  return new BopomofoKeyboardLayout(ktcm, "M4G");
+}
+
 const BopomofoKeyboardLayout* BopomofoKeyboardLayout::StandardLayout() {
   static BopomofoKeyboardLayout* layout = CreateStandardLayout();
   return layout;
@@ -948,6 +1041,16 @@ const BopomofoKeyboardLayout* BopomofoKeyboardLayout::IBMLayout() {
 
 const BopomofoKeyboardLayout* BopomofoKeyboardLayout::HanyuPinyinLayout() {
   static BopomofoKeyboardLayout* layout = CreateHanyuPinyinLayout();
+  return layout;
+}
+
+const BopomofoKeyboardLayout* BopomofoKeyboardLayout::CC1Layout() {
+  static BopomofoKeyboardLayout* layout = CreateCC1Layout();
+  return layout;
+}
+
+const BopomofoKeyboardLayout* BopomofoKeyboardLayout::M4GLayout() {
+  static BopomofoKeyboardLayout* layout = CreateM4GLayout();
   return layout;
 }
 
