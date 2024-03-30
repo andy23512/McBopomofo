@@ -55,6 +55,8 @@
                                 <menuItem title="倚天26鍵" tag="3" id="JoT-cZ-dgC"/>
                                 <menuItem title="IBM" tag="5" id="J1C-Tl-Msj"/>
                                 <menuItem title="漢語拼音" tag="4" id="IoH-YR-3Qk"/>
+                                <menuItem title="CC1" tag="6" id="6DJ-dX-70D"/>
+                                <menuItem title="M4G" tag="7" id="ism-Vt-agz"/>
                             </items>
                         </menu>
                         <connections>

@@ -179,6 +179,8 @@ class BopomofoKeyboardLayout {
   static const BopomofoKeyboardLayout* ETen26Layout();
   static const BopomofoKeyboardLayout* IBMLayout();
   static const BopomofoKeyboardLayout* HanyuPinyinLayout();
+  static const BopomofoKeyboardLayout* CC1Layout();
+  static const BopomofoKeyboardLayout* M4GLayout();
 
   BopomofoKeyboardLayout(const BopomofoKeyToComponentMap& ktcm,
                          const std::string& name)
