@@ -67,6 +67,12 @@ class KeyHandlerBopomofoTests: XCTestCase {
         Preferences.keyboardLayout = .IBM
         handler.syncWithPreferences()
 
+        Preferences.keyboardLayout = .CC1
+        handler.syncWithPreferences()
+
+        Preferences.keyboardLayout = .M4G
+        handler.syncWithPreferences()
+
         Preferences.keyboardLayout = savedKeyboardLayout
         handler.syncWithPreferences()
     }
