@@ -160,6 +160,12 @@ InputMode InputModePlainBopomofo = @"org.openvanilla.inputmethod.McBopomofo.Plai
         case KeyboardLayoutIBM:
             _bpmfReadingBuffer->setKeyboardLayout(Formosa::Mandarin::BopomofoKeyboardLayout::IBMLayout());
             break;
+        case KeyboardLayoutCC1:
+            _bpmfReadingBuffer->setKeyboardLayout(Formosa::Mandarin::BopomofoKeyboardLayout::CC1Layout());
+            break;
+        case KeyboardLayoutM4G:
+            _bpmfReadingBuffer->setKeyboardLayout(Formosa::Mandarin::BopomofoKeyboardLayout::M4GLayout());
+            break;
         default:
             _bpmfReadingBuffer->setKeyboardLayout(Formosa::Mandarin::BopomofoKeyboardLayout::StandardLayout());
             Preferences.keyboardLayout = KeyboardLayoutStandard;
