@@ -921,7 +921,7 @@ static BopomofoKeyboardLayout* CreateHanyuPinyinLayout() {
   return new BopomofoKeyboardLayout(ktcm, "HanyuPinyin");
 }
 
-static BopomofoKeyboardLayout* CreateCC1Layout() {
+static BopomofoKeyboardLayout* CreateTanChord41Layout() {
   std::vector<BPMF::Component> vec;
   BopomofoKeyToComponentMap ktcm;
 
@@ -967,10 +967,10 @@ static BopomofoKeyboardLayout* CreateCC1Layout() {
   ASSIGNKEY1(ktcm, vec, 'n', BPMF::Tone2);
   ASSIGNKEY1(ktcm, vec, ';', BPMF::Tone5);
 
-  return new BopomofoKeyboardLayout(ktcm, "CC1");
+  return new BopomofoKeyboardLayout(ktcm, "TanChord41");
 }
 
-static BopomofoKeyboardLayout* CreateM4GLayout () {
+static BopomofoKeyboardLayout* CreateTanChord36Layout () {
   std::vector<BPMF::Component> vec;
   BopomofoKeyToComponentMap ktcm;
 
@@ -1011,7 +1011,7 @@ static BopomofoKeyboardLayout* CreateM4GLayout () {
   ASSIGNKEY1(ktcm, vec, ';', BPMF::Tone4);
   ASSIGNKEY1(ktcm, vec, '/', BPMF::Tone5);
 
-  return new BopomofoKeyboardLayout(ktcm, "M4G");
+  return new BopomofoKeyboardLayout(ktcm, "TanChord36");
 }
 
 const BopomofoKeyboardLayout* BopomofoKeyboardLayout::StandardLayout() {
@@ -1044,13 +1044,13 @@ const BopomofoKeyboardLayout* BopomofoKeyboardLayout::HanyuPinyinLayout() {
   return layout;
 }
 
-const BopomofoKeyboardLayout* BopomofoKeyboardLayout::CC1Layout() {
-  static BopomofoKeyboardLayout* layout = CreateCC1Layout();
+const BopomofoKeyboardLayout* BopomofoKeyboardLayout::TanChord41Layout() {
+  static BopomofoKeyboardLayout* layout = CreateTanChord41Layout();
   return layout;
 }
 
-const BopomofoKeyboardLayout* BopomofoKeyboardLayout::M4GLayout() {
-  static BopomofoKeyboardLayout* layout = CreateM4GLayout();
+const BopomofoKeyboardLayout* BopomofoKeyboardLayout::TanChord36Layout() {
+  static BopomofoKeyboardLayout* layout = CreateTanChord36Layout();
   return layout;
 }
 

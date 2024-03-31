@@ -179,8 +179,8 @@ class BopomofoKeyboardLayout {
   static const BopomofoKeyboardLayout* ETen26Layout();
   static const BopomofoKeyboardLayout* IBMLayout();
   static const BopomofoKeyboardLayout* HanyuPinyinLayout();
-  static const BopomofoKeyboardLayout* CC1Layout();
-  static const BopomofoKeyboardLayout* M4GLayout();
+  static const BopomofoKeyboardLayout* TanChord41Layout();
+  static const BopomofoKeyboardLayout* TanChord36Layout();
 
   BopomofoKeyboardLayout(const BopomofoKeyToComponentMap& ktcm,
                          const std::string& name)
@@ -244,7 +244,7 @@ class BopomofoKeyboardLayout {
       BPMF follow = BPMF(components[1]);
       BPMF ending = components.size() > 2 ? BPMF(components[2]) : follow;
 
-      if (this == M4GLayout()) {
+      if (this == TanChord36Layout()) {
         if (follow.belongsToJQXClass() || follow.vowelComponent() == BPMF::E) {
           syllable += (beforeSeqHasIorUE || aheadSeqHasIorUE) ? follow : head;
         }
@@ -333,8 +333,8 @@ class BopomofoKeyboardLayout {
       }
     }
 
-    // heuristics for M4G keyboard layout
-    if (this == M4GLayout()) {
+    // heuristics for TanChord 36 layout
+    if (this == TanChord36Layout()) {
       if (syllable.vowelComponent() == BPMF::ENG && !syllable.hasConsonant() &&
           !syllable.hasMiddleVowel()) {
         syllable += BPMF(BPMF::ERR);
