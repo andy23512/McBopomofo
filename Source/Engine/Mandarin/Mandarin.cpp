@@ -995,9 +995,9 @@ static BopomofoKeyboardLayout* CreateTanChord36Layout () {
   ASSIGNKEY1(ktcm, vec, 'a', BPMF::I);
   ASSIGNKEY1(ktcm, vec, 't', BPMF::U);
   ASSIGNKEY1(ktcm, vec, 'y', BPMF::UE);
-  ASSIGNKEY1(ktcm, vec, 'l', BPMF::A);
-  ASSIGNKEY1(ktcm, vec, 'n', BPMF::O);
-  ASSIGNKEY2(ktcm, vec, 'j', BPMF::ER, BPMF::E);
+  ASSIGNKEY1(ktcm, vec, 'n', BPMF::A);
+  ASSIGNKEY1(ktcm, vec, 'j', BPMF::O);
+  ASSIGNKEY2(ktcm, vec, 'l', BPMF::ER, BPMF::E);
   ASSIGNKEY1(ktcm, vec, 'b', BPMF::AI);
   ASSIGNKEY1(ktcm, vec, 'q', BPMF::EI);
   ASSIGNKEY1(ktcm, vec, '\\', BPMF::AO);
